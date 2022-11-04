@@ -1,9 +1,9 @@
-fetch('http://localhost:3000/weather')
-	.then(response => response.json())
-	.then(data => {
-		if (data.weather) {
-			for (let i = 0; i < data.weather.length; i++) {
-				document.querySelector('#cityList').innerHTML += `
+fetch("https://weatherapp-part4-backend-dusky.vercel.app/weather")
+  .then((response) => response.json())
+  .then((data) => {
+    if (data.weather) {
+      for (let i = 0; i < data.weather.length; i++) {
+        document.querySelector("#cityList").innerHTML += `
 				<div class="cityContainer">
 				<p class="name">${data.weather[i].cityName}</p>
 				<p class="description">${data.weather[i].description}</p>
@@ -16,10 +16,10 @@ fetch('http://localhost:3000/weather')
 				<button class="deleteCity" id="${data.weather[i].cityName}">Delete</button>
 			</div>
 			`;
-			}
-			updateDeleteCityEventListener();
-		}
-	});
+      }
+      updateDeleteCityEventListener();
+    }
+  });
 
 function updateDeleteCityEventListener() {
 	for (let i = 0; i < document.querySelectorAll('.deleteCity').length; i++) {
@@ -38,14 +38,15 @@ function updateDeleteCityEventListener() {
 document.querySelector('#addCity').addEventListener('click', function () {
 	const cityName = document.querySelector('#cityNameInput').value;
 
-	fetch('http://localhost:3000/weather', {
-		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ cityName }),
-	}).then(response => response.json())
-		.then(data => {
-			if (data.result) {
-				document.querySelector('#cityList').innerHTML += `
+	fetch("https://weatherapp-part4-backend-dusky.vercel.app/weather", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ cityName }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.result) {
+        document.querySelector("#cityList").innerHTML += `
 			<div class="cityContainer">
 				<p class="name">${data.weather.cityName}</p>
 				<p class="description">${data.weather.description}</p>
@@ -58,9 +59,8 @@ document.querySelector('#addCity').addEventListener('click', function () {
 				<button class="deleteCity" id="${data.weather.cityName}">Delete</button>
 			</div>
 					`;
-				updateDeleteCityEventListener();
-				document.querySelector('#cityNameInput').value = '';
-			}
-
-		});
+        updateDeleteCityEventListener();
+        document.querySelector("#cityNameInput").value = "";
+      }
+    });
 });
